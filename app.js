@@ -11,7 +11,7 @@ var express                 = require("express"),
 
 var campgroundRoutes        = require("./routes/campgrounds"),
     commentRoutes           = require("./routes/comments"),
-    indexRoutes              = require("./routes/index");
+    indexRoutes             = require("./routes/index");
 
 //APP CONFIG
 app.use(express.static(__dirname+"/public"));       //FOR GOOD DIRECTORY ORGANIZATION
@@ -30,6 +30,9 @@ mongoose.connection.once('open', function() {
     console.log("MongoDB -> \'yelpcamp\' database connected!");
     //seedDB();
 });
+
+//MOMENT.JS INCLUSION
+app.locals.moment = require("moment");
 
 //AUTHENTICATION AND SESSION CONFIG
 app.use(require("express-session")({

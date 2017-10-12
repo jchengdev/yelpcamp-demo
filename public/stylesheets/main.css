@@ -17,3 +17,8 @@ body {
 .delete-form {
     display: inline;
 }
+
+#googlemap {
+    height: 400px;
+    width: 100%;
+}

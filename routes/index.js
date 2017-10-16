@@ -128,12 +128,12 @@ router.post("/forgot", middleware.isUnlogged, function(req, res, next){
             smtpTransport.sendMail(mailOptions, function(err){ // CHANGE TO ,info){
                 if(err){ // || CHANGE TO !info){
                     //req.flash("error", "Some error occurred when sending to that email address");
-                    //return res.redirect("/forgot");
+                    req.flash("success", "Reset token: "+token);
+                    return res.redirect("/forgot");
                 }
                 //console.log('Message sent: %s', info.messageId);
                 //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                //req.flash("success", "An e-mail has been sent to "+user.email+"with further instructions");
-                req.flash("success", "Reset token: "+token);
+                req.flash("success", "An e-mail has been sent to "+user.email+"with further instructions");
                 done(err, "done");
             });
         }

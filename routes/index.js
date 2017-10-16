@@ -28,9 +28,9 @@ router.post("/register", middleware.isUnlogged, function(req, res){
         avatar: req.body.avatar
     });
     
-    // if(req.body.adminCode === "secretcode") {
-    //     newUser.isAdmin = true;
-    // }
+    if(req.body.adminCode === "admin") {
+        newUser.isAdmin = true;
+    }
     
     User.register(newUser, req.body.password, function(err, user){
         if(err){
@@ -128,7 +128,7 @@ router.post("/forgot", middleware.isUnlogged, function(req, res, next){
             smtpTransport.sendMail(mailOptions, function(err){ // CHANGE TO ,info){
                 if(err){ // || CHANGE TO !info){
                     //req.flash("error", "Some error occurred when sending to that email address");
-                    req.flash("success", "Reset token: "+token);
+                    req.flash("success", "(NODEMAILER INTEGRATION INCOMPLETE) Reset token: "+token);
                     return res.redirect("/forgot");
                 }
                 //console.log('Message sent: %s', info.messageId);
@@ -203,6 +203,7 @@ router.post("/reset/:token", function(req, res) {
                         "This is a confirmation that the password for your account "+user.email+" has just been changed.\n"
             };
             smtpTransport.sendMail(mailOptions, function(err) {
+                //NODEMAILER INTEGRATION INCOMPLETE
                 //TODO: ERROR HANDLING
                 req.flash("success", "Your password has been changed");
                 done(err);

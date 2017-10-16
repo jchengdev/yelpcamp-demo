@@ -5,11 +5,13 @@ var express     = require("express"),
 
 //ROUTE: NEW (form)
 router.get("/new", middleware.isLoggedIn, middleware.checkCampgroundPath, function(req, res) {
+    //req.campground FROM MIDDLEWARE
     res.render("comments/new", {campground: req.campground});
 });
 
 //ROUTE: CREATE (new comment)
 router.post("/", middleware.isLoggedIn, middleware.checkCampgroundPath, function(req, res) {
+    //req.campground FROM MIDDLEWARE
     Comment.create(req.body.comment,                //REQUIRES BODY-PARSER
         function(err, newComment){
             if(err || !newComment){
@@ -33,6 +35,7 @@ router.post("/", middleware.isLoggedIn, middleware.checkCampgroundPath, function
 
 //ROUTE: EDIT (form)
 router.get("/:comment_id/edit", middleware.checkCommentOwnership, middleware.checkCampgroundPath, function(req, res) {
+    //req.comment FROM MIDDLEWARE
     console.log("EDIT COMMENT: ");
     console.log(req.comment);
     res.render("comments/edit", {campground_id: req.params["id"], comment: req.comment});
@@ -58,6 +61,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership, middleware.checkCam
 
 //ROUTE: DELETE (selected comment)
 router.delete("/:comment_id", middleware.checkCommentOwnership, middleware.checkCampgroundPath, function(req, res) {
+    //req.campground FROM MIDDLEWARE
     Comment.findByIdAndRemove(req.params["comment_id"], function(err){
         if(err){
             console.log("Delete error: ");

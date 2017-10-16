@@ -4,6 +4,11 @@ var express     = require("express"),
     middleware  = require("../middleware/index"),       //REQUIRES index.js inside folder
     geocoder    = require("geocoder");
 
+// Define escapeRegex function for search feature
+function escapeRegex(text) {
+    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+};
+
 //ROUTE: INDEX
 router.get("/", function(req, res) {
     Campground.find({}, function(err, allCampgrounds){
@@ -84,6 +89,7 @@ router.get("/:id", function(req, res) {
 
 //ROUTE: EDIT (form)
 router.get("/:id/edit", middleware.checkCampgroundOwnership, function(req, res) {
+    //req.campground FROM MIDDLEWARE
     console.log("EDIT CAMPGROUND: ");
     console.log(req.campground);
     res.render("campgrounds/edit", {campground: req.campground});

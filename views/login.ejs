@@ -6,16 +6,19 @@
     <div style="width: 30%; margin: 25px auto;">
         <form action="/login" method="POST">
             <div class="form-group">
-                <input class="form-control" type="text" name="username" placeholder="username"></input>
+                <label for="usrnm">Username</label>
+                <input class="form-control" type="text" name="username" id="usrnm" placeholder="username"></input>
             </div>
             <div class="form-group">
-                <input class="form-control" type="password" name="password" placeholder="password"></input>
+                <label for="passwrd">Password</label>
+                <input class="form-control" type="password" name="password" id="passwrd" placeholder="password"></input>
             </div>
             <div class="form-group">
                 <button class="btn btn-lg btn-primary btn-block">Submit</button>
             </div>
         </form>
-        <a href="/campgrounds">Go Back</a>
+        <a href="/forgot">Forgot password?</a>
+        <a href="/campgrounds" style="padding-top: 8px; display: block; font-size: 12px;">Go Back</a>
     </div>
 </div>
 

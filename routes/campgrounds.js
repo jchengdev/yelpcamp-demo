@@ -11,15 +11,30 @@ function escapeRegex(text) {
 
 //ROUTE: INDEX
 router.get("/", function(req, res) {
-    Campground.find({}, function(err, allCampgrounds){
-        if(err){
-            console.log("Something wrong with .find({})");
-            console.log(err);
-            res.send("Campgrounds search error...")
-        } else {
-            res.render("campgrounds/index", {campgrounds: allCampgrounds, page: "campgrounds"});
-        }
-    });
+    console.log(req.query.search);
+    if(req.query.search) { //CHANGE TO && req.xhr) {
+        const regex = new RegExp(escapeRegex(req.query.search), "gi");
+        Campground.find({name: regex}, function(err, allCampgrounds){
+            if(err){
+                console.log("Something wrong with .find({name:"+regex+"})");
+                console.log(err);
+                res.send("Campgrounds search error...")
+            } else {
+                //res.status(200).json(allCampgrounds);
+                res.render("campgrounds/index", {campgrounds: allCampgrounds, page: "campgrounds"});
+            }
+        });
+    } else {
+        Campground.find({}, function(err, allCampgrounds){
+            if(err){
+                console.log("Something wrong with .find({})");
+                console.log(err);
+                res.send("Campgrounds search error...")
+            } else {
+                res.render("campgrounds/index", {campgrounds: allCampgrounds, page: "campgrounds"});
+            }
+        });
+    }
 });
 
 //ROUTE: NEW (form)

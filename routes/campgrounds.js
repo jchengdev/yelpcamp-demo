@@ -11,7 +11,6 @@ function escapeRegex(text) {
 
 //ROUTE: INDEX
 router.get("/", function(req, res) {
-    console.log(req.query.search);
     if(req.query.search) { //CHANGE TO && req.xhr) {
         const regex = new RegExp(escapeRegex(req.query.search), "gi");
         Campground.find({name: regex}, function(err, allCampgrounds){

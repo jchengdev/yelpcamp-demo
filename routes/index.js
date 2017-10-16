@@ -189,11 +189,7 @@ router.post("/reset/:token", function(req, res) {
         },
         function(user, done) {
             var smtpTransport = nodemailer.createTransport({
-                //service: 'Gmail',
-                host: "smtp.gmail.com",
-                port: 587,
-                secure: false, // true for 465, false for other ports
-                requireTLS: true,
+                service: "Gmail",
                 auth: {
                     user: "whaaataname@gmail.com",
                     pass: process.env.GMAILPW
@@ -207,6 +203,7 @@ router.post("/reset/:token", function(req, res) {
                         "This is a confirmation that the password for your account "+user.email+" has just been changed.\n"
             };
             smtpTransport.sendMail(mailOptions, function(err) {
+                //TODO: ERROR HANDLING
                 req.flash("success", "Your password has been changed");
                 done(err);
             });

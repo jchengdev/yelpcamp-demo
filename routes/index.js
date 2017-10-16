@@ -1,6 +1,7 @@
 var express     = require("express"),
     router      = express.Router(),
     passport    = require("passport"),
+    Campground  = require("../models/campground"),
     User        = require("../models/user"),
     middleware  = require("../middleware"),     //REQUIRES index.js inside folder
     asyncModule = require("async"),
@@ -146,7 +147,7 @@ router.post("/forgot", middleware.isUnlogged, function(req, res, next){
 //ROUTE: PASSWORD RESET
 router.get("/reset/:token", function(req, res){
     User.findOne({
-                    resetPasswordToken: req.params.token,
+                    resetPasswordToken: req.params.token,   //TECHNICALLY, THIS DOESN'T AVOID USERS SIMULTANEOUS RESET CONFLICT (but random token big enough)
                     resetPasswordExpires: {$gt: Date.now()}
                  }, function(err, user){
                     if(err || !user) {
@@ -162,7 +163,7 @@ router.post("/reset/:token", function(req, res) {
     asyncModule.waterfall([
         function(done) {
             User.findOne({
-                            resetPasswordToken: req.params.token,
+                            resetPasswordToken: req.params.token,   //TECHNICALLY, THIS DOESN'T AVOID USERS SIMULTANEOUS RESET CONFLICT (but random token big enough)
                             resetPasswordExpires: {$gt: Date.now()}
                          }, function(err, user) {
                                 if (err || !user) {
@@ -212,6 +213,24 @@ router.post("/reset/:token", function(req, res) {
     ], function(err) {
         if(err) console.log("error: "+err);
         res.redirect("/campgrounds");
+    });
+});
+
+//ROUTE: USER PROFILE
+router.get("/users/:id", function(req, res) {
+    User.findById(req.params["id"], function(err, foundUser){
+        if(err) {
+            req.flash("error", "User not found");
+            res.redirect("/campgrounds");
+        } else {
+            Campground.find().where("author.id").equals(foundUser._id).exec(function(err, foundCampgrounds) {
+                if(err || !foundCampgrounds) {
+                    req.flash("error", "Something went wrong");
+                    req.redirect("/campgrounds");
+                }
+                res.render("users/show", {user: foundUser, campgrounds: foundCampgrounds});
+            });
+        }
     });
 });
 

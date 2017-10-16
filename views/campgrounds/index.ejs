@@ -12,13 +12,18 @@
                 <input type="text" name="search" placeholder="Campground search..." class="form-control">
             </div>
             <div class="form-group">
-                <button class="btn btn-xs btn-basic">Search</button>
+                <button class="btn btn-sm btn-basic">Search</button>
             </div>
         </form>
     </div>
 </header>
-    
+
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+    <% if(noMatch !== undefined) { %>
+        <div class="col-md-6">
+            <h3><%= noMatch %></h3>
+        </div>
+    <% } %>
     <% campgrounds.forEach(function(campground){ %>
         <div class="col-md-3 col-sm-6">
             <div class="thumbnail">

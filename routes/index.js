@@ -98,22 +98,22 @@ router.post("/forgot", middleware.isUnlogged, function(req, res, next){
         },
         function(token, user, done){
             var smtpTransport = nodemailer.createTransport({
-                // service: "Gmail",
-                // auth: {
-                //     user: "whaaataname@gmail.com",
-                //     pass: process.env.GMAILPW
-                //     // type: "login"
-                // }
                 service: "Gmail",
                 auth: {
-                    XOAuth2: {
-                        user: "whaaataname@gmail.com", // Your gmail address.
-                                                        // Not @developer.gserviceaccount.com
-                        clientId: "249992494218-bismd8f7po3esjrpilhacf5ou78ai62o.apps.googleusercontent.com",
-                        clientSecret: "L5XOiJ_1BteopD8-uqNP2j59",
-                        refreshToken: "1/cKiF2p4Ys1h7UWvaYOu_o_X3-GwLSx3l9GvCwwfNU3s"
-                    }
+                    user: "whaaataname@gmail.com",
+                    pass: process.env.GMAILPW
+                    // type: "login"
                 }
+                // service: "Gmail",
+                // auth: {
+                //     XOAuth2: {
+                //         user: "whaaataname@gmail.com", // Your gmail address.
+                //                                         // Not @developer.gserviceaccount.com
+                //         clientId: "249992494218-bismd8f7po3esjrpilhacf5ou78ai62o.apps.googleusercontent.com",
+                //         clientSecret: "L5XOiJ_1BteopD8-uqNP2j59",
+                //         refreshToken: "1/cKiF2p4Ys1h7UWvaYOu_o_X3-GwLSx3l9GvCwwfNU3s"
+                //     }
+                // }
             });
             var mailOptions = {
                 from: "'YelpCamp Support' <whaaataname@gmail.com>", // sender address
@@ -125,17 +125,16 @@ router.post("/forgot", middleware.isUnlogged, function(req, res, next){
                         "If you did not request this, please ignore this email and your password will remain unchanged"+"\n\n", 
                 //html: '<b>Hello world?</b>' // html body
             };
-            smtpTransport.sendMail(mailOptions, function(err){
-                if(err){// || !info){
-                    req.flash("error", "Some error occurred when sending to that email address");
-                    eval(require("locus"));
-                    return res.redirect("/forgot");
+            smtpTransport.sendMail(mailOptions, function(err){ // CHANGE TO ,info){
+                if(err){ // || CHANGE TO !info){
+                    //req.flash("error", "Some error occurred when sending to that email address");
+                    //return res.redirect("/forgot");
                 }
                 //console.log('Message sent: %s', info.messageId);
                 //console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                req.flash("success", "An e-mail has been sent to "+user.email+"with further instructions");
+                //req.flash("success", "An e-mail has been sent to "+user.email+"with further instructions");
+                req.flash("success", "Reset token: "+token);
                 done(err, "done");
-                eval(require("locus"));
             });
         }
     ], function(err){

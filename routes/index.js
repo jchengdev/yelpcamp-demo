@@ -226,7 +226,7 @@ router.post("/reset/:token", function(req, res) {
 //ROUTE: USER PROFILE
 router.get("/users/:id", function(req, res) {
     User.findById(req.params["id"], function(err, foundUser){
-        if(err) {
+        if(err || !foundUser) {
             req.flash("error", "User not found");
             res.redirect("/campgrounds");
         } else {

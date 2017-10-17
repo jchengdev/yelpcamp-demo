@@ -57,6 +57,7 @@ router.post("/login", middleware.isUnlogged, passport.authenticate("local", {
                                                                       failureRedirect: "/login",                    //MIDDLEWARE
                                                                       failureFlash: "Invalid username or password"  //MIDDLEWARE
                                                                   }), function(req, res){
+                                                                      //res.redirect("/campgrounds" + req.user.username); //SAME AS SUCCESSREDIRECT
 });
 
 //ROUTE: LOGOUT
@@ -67,17 +68,20 @@ router.get("/logout", function(req, res){
 });
 
 //ROUTE: PASSWORD RESET REQUEST (form)
-router.get("/forgot", middleware.isUnlogged, function(req, res){
+router.get("/forgot", function(req, res){
     res.render("forgot");
 });
 
 //ROUTE: PASSWORD RESET REQUEST
-router.post("/forgot", middleware.isUnlogged, function(req, res, next){
+router.post("/forgot", function(req, res, next){
     asyncModule.waterfall([
         function(done) {
+            if(req.isAuthenticated() && (req.body.email !== req.user.email)){
+                req.flash("error", "Enter your email address");
+                return res.redirect("/forgot");
+            }
             crypto.randomBytes(20, function(err, buf){
                 var token = buf.toString("hex");
-                console.log("token: "+token);
                 done(err, token);
             });
         },
@@ -92,7 +96,6 @@ router.post("/forgot", middleware.isUnlogged, function(req, res, next){
                 user.resetPasswordExpires = Date.now() + 600000; //10 minutes
                 
                 user.save(function(err){
-                    console.log("user: "+user); //<<REMOVE>>
                     done(err, token, user);
                 });
             })
@@ -177,9 +180,13 @@ router.post("/reset/:token", function(req, res) {
                                         user.resetPasswordExpires = undefined;
                                         user.save(function(err) {
                                             if(err) console.log("error: "+err);
-                                            req.logIn(user, function(err) {
-                                                done(err, user);
-                                            });
+                                            if(!req.isAuthenticated()){
+                                                req.logIn(user, function(err) {
+                                                    done(err, user);
+                                                });
+                                            } else {
+                                                return res.redirect("/users/"+req.user._id);
+                                            }
                                         });
                                     });
                                 } else {
@@ -226,9 +233,13 @@ router.get("/users/:id", function(req, res) {
             Campground.find().where("author.id").equals(foundUser._id).exec(function(err, foundCampgrounds) {
                 if(err || !foundCampgrounds) {
                     req.flash("error", "Something went wrong");
-                    req.redirect("/campgrounds");
+                    return req.redirect("/campgrounds");
                 }
-                res.render("users/show", {user: foundUser, campgrounds: foundCampgrounds});
+                var loginStatus = undefined;
+                if(req.isAuthenticated()){
+                    loginStatus = true;
+                }
+                res.render("users/show", {user: foundUser, campgrounds: foundCampgrounds, loginStatus: loginStatus});
             });
         }
     });

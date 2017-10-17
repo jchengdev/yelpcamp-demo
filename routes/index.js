@@ -21,28 +21,39 @@ router.get("/register", middleware.isUnlogged, function(req, res){
 
 //ROUTE: REGISTER (new)
 router.post("/register", middleware.isUnlogged, function(req, res){
-    var newUser = new User({
-        username: req.body.username,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        avatar: req.body.avatar
-    });
-    
-    if(req.body.adminCode === "admin") {
-        newUser.isAdmin = true;
-    }
-    
-    User.register(newUser, req.body.password, function(err, user){
-        if(err){
-            console.log(err);
-            req.flash("error", err.message);
+    User.find({email: req.body.email}, function(err, users){                    //UNIQUE EMAIL CHECK
+        if(err || !users){
+            req.flash("error", "Something went wrong");
             return res.redirect("/register");
+        } else {
+            if(users.length > 0){
+                req.flash("error", "Another user registered with that email");
+                return res.redirect("/register");
+            } else {
+                var newUser = new User({
+                    username: req.body.username,
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    email: req.body.email,
+                    avatar: req.body.avatar
+                });
+                if(req.body.adminCode === "admin") {
+                    newUser.isAdmin = true;
+                }
+                
+                User.register(newUser, req.body.password, function(err, user){  //UNIQUE USERNAME CHECK INCLUDED IN PASSPORTLOCALMONGOOSE
+                    if(err){
+                        console.log(err);
+                        req.flash("error", err.message);
+                        return res.redirect("/register");
+                    }
+                    passport.authenticate("local")(req, res, function(){
+                        req.flash("success", "Welcome to Yelpcamp "+user.username);
+                        res.redirect("/campgrounds");
+                    });
+                });
+            }
         }
-        passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Welcome to Yelpcamp "+user.username);
-            res.redirect("/campgrounds");
-        });
     });
 });
 
@@ -228,9 +239,9 @@ router.get("/users/:id", function(req, res) {
     User.findById(req.params["id"], function(err, foundUser){
         if(err || !foundUser) {
             req.flash("error", "User not found");
-            res.redirect("/campgrounds");
+            return res.redirect("/campgrounds");
         } else {
-            Campground.find().where("author.id").equals(foundUser._id).exec(function(err, foundCampgrounds) {
+            Campground.find().where("author.id").equals(foundUser._id).exec(function(err, foundCampgrounds) {   //ASSUMING 'foundUser' ALWAYS FOUND
                 if(err || !foundCampgrounds) {
                     req.flash("error", "Something went wrong");
                     return req.redirect("/campgrounds");

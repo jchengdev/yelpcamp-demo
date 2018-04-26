@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express                 = require("express"),
     app                     = express(),
     bodyParser              = require("body-parser"),
@@ -58,6 +59,11 @@ app.use(function(req, res, next){
 app.use("/",indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
+
+//DEVELOPER NOTES FOR SHOWCASE
+app.get("/about", function(req, res) {
+    res.render("about");
+});
 
 //ROUTE: UNKNOWN PATH REDIRECT
 app.get("*", function(req, res) {

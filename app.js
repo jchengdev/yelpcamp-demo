@@ -60,7 +60,7 @@ app.use("/",indexRoutes);
 app.use("/campgrounds",campgroundRoutes);
 app.use("/campgrounds/:id/comments",commentRoutes);
 
-//DEVELOPER NOTES FOR SHOWCASE
+//DEVELOPER NOTES PAGE
 app.get("/about", function(req, res) {
     res.render("about");
 });

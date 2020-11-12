@@ -24,8 +24,10 @@ app.use(flash());                                   //FOR FLASH MESSAGES
 //DB CONNECTION
 var url = process.env.DATABASEURL || "mongodb://localhost/yelpcamp";
 // EXECUTE ON CLI "export DATABASEURL=mongodb://localhost/yelpcamp" AND "heroku config:set DATABASEURL=mongodb://<dbuser>:<dbpassword>@ds113785.mlab.com:13785/yelpcamp_123"
-mongoose.connect(url, {useMongoClient: true});                                      //FOR MONGODB CONNECTION
+
+
 mongoose.Promise = global.Promise;                                                  //FIX FOR PACKAGE DEPRECATION
+mongoose.connect(url, { useNewUrlParser: true , useUnifiedTopology: true, keepAlive: true });                                      
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));  //ON CONNECTION ERROR
 mongoose.connection.once('open', function() {
     console.log("MongoDB -> \'yelpcamp\' database connected!");

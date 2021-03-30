@@ -1,0 +1,74 @@
+{ 
+  "root": true, 
+  "ignorePatterns": ["**/node_modules/", "**/build/**", "**/dist/**"], 
+  "plugins": ["react", "react-hooks", "jsx-a11y"], 
+  "env": { 
+    "browser": true, 
+    "commonjs": true, 
+    "node": true, 
+    "es6": true 
+  }, 
+  "parser": "@babel/eslint-parser", 
+  "parserOptions": { 
+    // ecmaVersion 2021 still under development, default parser incompatible 
+    "ecmaVersion": 2020, 
+    "sourceType": "module", 
+    "allowImportExportEverywhere": false, 
+    "ecmaFeatures": { 
+      "jsx": true 
+    } 
+  },  
+  "extends": [ 
+    "eslint:recommended", 
+    "plugin:prettier/recommended", 
+    "plugin:react/recommended", 
+    "plugin:jsx-a11y/recommended" 
+  ], 
+  "globals": { 
+    "Atomics": "readonly", 
+    "SharedArrayBuffer": "readonly" 
+  }, 
+  "rules": { 
+    "import/prefer-default-export": "off", 
+    "no-extra-boolean-cast": "warn", 
+    "no-mixed-operators": [ 
+      "warn", 
+      { 
+        "groups": [ 
+          ["&", "|", "^", "~", "<<", ">>", ">>>"], 
+          ["==", "!=", "===", "!==", ">", ">=", "<", "<="], 
+          ["&&", "||"], 
+          ["in", "instanceof"] 
+        ], 
+        "allowSamePrecedence": false 
+      } 
+    ], 
+    "no-useless-escape": "warn", 
+    "prettier/prettier": "error", 
+    "jsx-a11y/anchor-is-valid": [ 
+      "error", 
+      { 
+        "components": ["Link"], 
+        "specialLink": ["hrefLeft", "hrefRight"], 
+        "aspects": ["invalidHref", "preferButton"] 
+      } 
+    ], 
+    "react/jsx-pascal-case": [ 
+      "warn", 
+      { 
+        "allowAllCaps": true, 
+        "ignore": [] 
+      } 
+    ], 
+    "react/no-typos": "error", 
+    "react/no-unescaped-entities": "warn", 
+    "react/prop-types": "off", 
+    "react/require-render-return": "error", 
+    "react-hooks/rules-of-hooks": "error" 
+  }, 
+  "settings": { 
+    "react": { 
+      "version": "detect" 
+    } 
+  } 
+}

@@ -76,3 +76,26 @@ app.get("*", function(req, res) {
 app.listen(process.env.PORT, process.env.IP, function(){
    console.log("YelpCamp server started...");
 });
+
+// quit on ctrl-c when running docker in terminal
+process.on('SIGINT', function onSigint() {
+  console.info('Got SIGINT. Graceful shutdown ', new Date().toISOString());
+  shutdown();
+});
+
+// quit properly on docker stop
+process.on('SIGTERM', function onSigterm() {
+  console.info('Got SIGTERM. Graceful shutdown ', new Date().toISOString());
+  shutdown();
+});
+
+// shut down server
+const shutdown = () => {
+  server.close(function onServerClosed(err) {
+    if (err) {
+      console.error(err);
+      process.exitCode = 1;
+    }
+    process.exit();
+  });
+};

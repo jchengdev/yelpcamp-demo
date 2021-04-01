@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: username
       MONGO_INITDB_ROOT_PASSWORD: password
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet 
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
 
   mongo-express:
     container_name: 'mongo-express'
@@ -21,7 +21,7 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: username
       ME_CONFIG_MONGODB_ADMINPASSWORD: password
     depends_on:
-      db-docker: 
+      db-docker:
         condition: service_healthy
 
   yelpcamp:
@@ -45,3 +45,5 @@ services:
       - DEBUG=*,-request:*
       - DATABASEURL=mongodb://username:password@db-docker/yelpcamp_123
       - PORT=8080
+    env_file:
+      - ./.env # create untracked file with remote DB URI

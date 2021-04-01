@@ -16,7 +16,8 @@
     "allowImportExportEverywhere": false, 
     "ecmaFeatures": { 
       "jsx": true 
-    } 
+    },
+    "requireConfigFile": false // @babel/eslint-parser required flag
   },  
   "extends": [ 
     "eslint:recommended", 

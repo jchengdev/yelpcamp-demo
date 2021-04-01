@@ -82,7 +82,7 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-# dist # workaround until gulp-typescript gets imported into production Docker image
+dist
 
 # Gatsby files
 .cache/

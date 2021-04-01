@@ -24,3 +24,24 @@ services:
       db-docker: 
         condition: service_healthy
 
+  yelpcamp:
+    container_name: 'yelpcamp-express'
+    image: 'jchengdeveng/yelpcamp-express'
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+      args:
+        CREATED_DATE: '$BUILD_DATE'
+        SOURCE_COMMIT: '$COMMIT'
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/node/app
+      - /node/node_modules
+    environment:
+      - NODE_VERSION=14.16.0
+      - NODE_ENV=development
+      - DEBUG=*,-request:*
+      - DATABASEURL=mongodb://username:password@db-docker/yelpcamp_123
+      - PORT=8080

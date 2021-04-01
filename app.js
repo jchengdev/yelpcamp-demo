@@ -32,6 +32,7 @@ mongoose.connect(url, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   keepAlive: true,
+  useCreateIndex: true,
 });
 mongoose.connection.on(
   'error',

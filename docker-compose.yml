@@ -44,13 +44,13 @@ services:
 
   yelpcamp:
     container_name: 'yelpcamp-ejs'
-    image: 'jchengdeveng/yelpcamp-ejs'
+    image: 'jchengdeveng/yelpcamp-ejs-dev'
     build:
       context: .
       dockerfile: Dockerfile
       target: dev
       args:
-        CREATED_DATE: '$BUILD_DATE'
+        BUILD_DATE: '$BUILD_DATE'
         SOURCE_COMMIT: '$COMMIT'
     ports:
       - 8080:8080

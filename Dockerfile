@@ -10,7 +10,7 @@ EXPOSE 8080
 ENV NODE_VERSION=14.16.0
 ENV NODE_ENV=production
 ENV DEBUG=*,-request:*
-ENV DATABASE_URL=mongodb://username:password@db-docker:27017/yelpcamp_123
+ENV DATABASE_URL=mongodb://username:password@db-docker:27017/yelpcamp_123?authSource=admin
 ENV PORT=8080
 RUN mkdir /node && chown -R node:node /node
 USER node

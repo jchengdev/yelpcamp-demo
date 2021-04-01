@@ -26,7 +26,7 @@ app.use(flash());
 //DB CONNECTION
 var url =
   process.env.DATABASE_URL ||
-  'mongodb://username:password@localhost:27017/yelpcamp_123';
+  'mongodb://username:password@localhost:27017/yelpcamp_123?authSource=admin'; // * DB user created inside 'admin' database (check ./seeds/mongo_shell.js)
 
 mongoose.Promise = global.Promise; //FIX FOR PACKAGE DEPRECATION
 mongoose.connect(url, {

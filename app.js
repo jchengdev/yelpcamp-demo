@@ -7,8 +7,8 @@ var express                 = require("express"),
     flash                   = require("connect-flash"),
     passport                = require("passport"),
     localStrategy           = require("passport-local"),
-    User                    = require("./models/user"),
-    seedDB                  = require("./seeds");
+    User                    = require("./models/user");
+    //seedDB                  = require("./seeds");
 
 var campgroundRoutes        = require("./routes/campgrounds"),
     commentRoutes           = require("./routes/comments"),
@@ -22,9 +22,7 @@ app.use(methodOverride("_method"));                 //SIMULATES PUT HTTP REQUEST
 app.use(flash());                                   //FOR FLASH MESSAGES
 
 //DB CONNECTION
-var url = process.env.DATABASEURL || "mongodb://localhost/yelpcamp";
-// EXECUTE ON CLI "export DATABASEURL=mongodb://localhost/yelpcamp" AND "heroku config:set DATABASEURL=mongodb://<dbuser>:<dbpassword>@ds113785.mlab.com:13785/yelpcamp_123"
-
+var url = process.env.DATABASE_URL || "mongodb://localhost/yelpcamp_123";
 
 mongoose.Promise = global.Promise;                                                  //FIX FOR PACKAGE DEPRECATION
 mongoose.connect(url, { useNewUrlParser: true , useUnifiedTopology: true, keepAlive: true });                                      

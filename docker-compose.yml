@@ -43,7 +43,7 @@ services:
       - NODE_VERSION=14.16.0
       - NODE_ENV=development
       - DEBUG=*,-request:*
-      - DATABASEURL=mongodb://username:password@db-docker/yelpcamp_123
+      - DATABASE_URL=mongodb://username:password@db-docker/yelpcamp_123
       - PORT=8080
     env_file:
       - ./.env # create untracked file with remote DB URI

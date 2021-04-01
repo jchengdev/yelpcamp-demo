@@ -115,14 +115,14 @@ router.post("/forgot", function(req, res, next){
             var smtpTransport = nodemailer.createTransport({
                 service: "Gmail",
                 auth: {
-                    user: "whaaataname@gmail.com",
+                    user: "sample@example.com",
                     pass: process.env.GMAILPW
                     // type: "login"
                 }
                 // service: "Gmail",
                 // auth: {
                 //     XOAuth2: {
-                //         user: "whaaataname@gmail.com", // Your gmail address.
+                //         user: "sample@example.com", // Your gmail address.
                 //                                         // Not @developer.gserviceaccount.com
                 //         clientId: "249992494218-bismd8f7po3esjrpilhacf5ou78ai62o.apps.googleusercontent.com",
                 //         clientSecret: "L5XOiJ_1BteopD8-uqNP2j59",
@@ -131,7 +131,7 @@ router.post("/forgot", function(req, res, next){
                 // }
             });
             var mailOptions = {
-                from: "'YelpCamp Support' <whaaataname@gmail.com>", // sender address
+                from: "'YelpCamp Support' <sample@example.com>", // sender address
                 to: user.email,
                 subject: "[YelpCamp] Password reset", // Subject line
                 text:   "You are receiving this because you (or someone else) have requested the reset of the password"+"\n\n"+
@@ -210,12 +210,12 @@ router.post("/reset/:token", function(req, res) {
             var smtpTransport = nodemailer.createTransport({
                 service: "Gmail",
                 auth: {
-                    user: "whaaataname@gmail.com",
+                    user: "sample@example.com",
                     pass: process.env.GMAILPW
                 }
             });
             var mailOptions = {
-                from: "'YelpCamp Support' <whaaataname@gmail.com>",
+                from: "'YelpCamp Support' <sample@example.com>",
                 to: user.email,
                 subject: "[YelpCamp] Your password has been changed",
                 text:   "Hello,\n\n" +

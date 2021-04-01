@@ -2,14 +2,17 @@ version: '2.4'
 services:
   db-docker:
     container_name: 'mongodb'
-    image: 'mongo:4.4.4'
+    image: 'jchengdeveng/mongo-db'
+    build:
+      context: ./db
+      dockerfile: Dockerfile
     ports:
       - 27017:27017
     volumes:
-      - /data/db
+      - mongo-data:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: username
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
 
@@ -21,8 +24,8 @@ services:
     environment:
       MONGO_DB: db-docker
       DATABASE_NAME: yelpcamp_123
-      USERNAME: username # using root (wrong)
-      PASSWORD: password # using root (wrong)
+      USERNAME: username
+      PASSWORD: password
     depends_on:
       db-docker:
         condition: service_healthy
@@ -34,8 +37,8 @@ services:
       - 8081:8081
     environment:
       ME_CONFIG_MONGODB_SERVER: db-docker
-      ME_CONFIG_MONGODB_ADMINUSERNAME: username
-      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: admin
     depends_on:
       db-docker:
         condition: service_healthy
@@ -57,10 +60,14 @@ services:
       - /node/node_modules
     environment:
       - NODE_ENV=development
-      - DATABASE_URL=mongodb://db-docker:27017/yelpcamp_123
+      - DATABASE_URL=mongodb://username:password@db-docker:27017/yelpcamp_123 # 'db-docker' DNS label instead of 'localhost' (cross-container)
       - PORT=8080
     env_file:
-      - ./.env # create untracked file with remote DB URI
+      - ./.env # create untracked file for remote DB connectivity DATABASE_URL=mongodb+srv://<...>
     depends_on:
       mongo-seed:
         condition: service_started
+
+volumes:
+  mongo-data:
+    name: 'mongo-data'

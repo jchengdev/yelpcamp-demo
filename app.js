@@ -25,7 +25,9 @@ app.use(methodOverride('_method')); // * simulates HTTP PUT/DELETE requests
 app.use(flash());
 
 //DB CONNECTION
-var url = process.env.DATABASE_URL || 'mongodb://localhost/yelpcamp_123';
+var url =
+  process.env.DATABASE_URL ||
+  'mongodb://username:password@localhost:27017/yelpcamp_123';
 
 mongoose.Promise = global.Promise; //FIX FOR PACKAGE DEPRECATION
 mongoose.connect(url, {

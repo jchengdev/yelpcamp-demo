@@ -2,10 +2,7 @@ version: '2.4'
 services:
   db-docker:
     container_name: 'mongodb'
-    image: 'jchengdeveng/mongo-db'
-    build:
-      context: ./db
-      dockerfile: Dockerfile
+    image: 'mongo:4.4.4'
     ports:
       - 27017:27017
     volumes:

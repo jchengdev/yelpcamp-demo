@@ -3,6 +3,8 @@ services:
   db-docker:
     container_name: 'mongodb'
     image: 'mongo:4.4.4'
+    ports:
+      - 27017:27017
     volumes:
       - /data/db
     environment:
@@ -10,6 +12,20 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+
+  mongo-seed:
+    image: 'jchengdeveng/mongo-seed'
+    build:
+      context: ./seeds
+      dockerfile: Dockerfile
+    environment:
+      MONGO_DB: db-docker
+      DATABASE_NAME: yelpcamp_123
+      USERNAME: username # using root (wrong)
+      PASSWORD: password # using root (wrong)
+    depends_on:
+      db-docker:
+        condition: service_healthy
 
   mongo-express:
     container_name: 'mongo-express'
@@ -40,13 +56,11 @@ services:
       - .:/node/app
       - /node/node_modules
     environment:
-      - NODE_VERSION=14.16.0
       - NODE_ENV=development
-      - DEBUG=*,-request:*
-      - DATABASE_URL=mongodb://username:password@db-docker/yelpcamp_123
+      - DATABASE_URL=mongodb://db-docker:27017/yelpcamp_123
       - PORT=8080
     env_file:
       - ./.env # create untracked file with remote DB URI
     depends_on:
-      db-docker:
-        condition: service_healthy
+      mongo-seed:
+        condition: service_started

@@ -1,0 +1,77 @@
+[
+  {
+    "_id": { "$oid": "59e60795af773b00126a5db2" },
+    "name": "CabbageCamp",
+    "image": "https://images.unsplash.com/photo-1496259947555-d77e1140f6c5?dpr=1&auto=format&fit=crop&w=1500&h=&q=60&cs=tinysrgb&crop=",
+    "description": "Somewhere inside the virtual land of MegaMan",
+    "price": "0.02",
+    "location": "Tokyo, Japan",
+    "lat": 35.6894875,
+    "lng": 139.6917064,
+    "comments": [
+      { "$oid": "5ae26374f6443700043b22a4" },
+      { "$oid": "5ae27d225f0fcf000493bd99" }
+    ],
+    "author": {
+      "id": { "$oid": "59e60710b704fc00127503a9" },
+      "username": "Cabbage"
+    },
+    "createdAt": { "$date": "2017-10-17T13:37:25.136Z" },
+    "__v": 4
+  },
+  {
+    "_id": { "$oid": "59e603a1ace0910012cf819e" },
+    "name": "Green Place",
+    "image": "https://images.unsplash.com/photo-1421789665209-c9b2a435e3dc?dpr=1&auto=format&fit=crop&w=1502&h=&q=60&cs=tinysrgb&crop=",
+    "description": "a greeny place to rest",
+    "price": "0.01",
+    "location": "Amazon Rainforest, Codajás - State of Amazonas, 69450-000, Brazil",
+    "lat": -3.4653053,
+    "lng": -62.21588049999999,
+    "comments": [
+      { "$oid": "59e604bbace0910012cf819f" },
+      { "$oid": "59e604ddace0910012cf81a0" },
+      { "$oid": "59e6071cb704fc00127503aa" }
+    ],
+    "author": {
+      "id": { "$oid": "59e60316ace0910012cf819d" },
+      "username": "Tomato"
+    },
+    "createdAt": { "$date": "2017-10-17T13:20:33.231Z" },
+    "__v": 7
+  },
+  {
+    "_id": { "$oid": "59e6057eace0910012cf81a2" },
+    "name": "PotatoCamp",
+    "image": "https://images.unsplash.com/photo-1431057259500-78dd318a0a75?dpr=1&auto=format&fit=crop&w=1500&h=&q=60&cs=tinysrgb&crop=",
+    "description": "A very expensive place to be",
+    "price": "999999",
+    "location": "Washington, DC, USA",
+    "lat": 38.9071923,
+    "lng": -77.0368707,
+    "comments": [{ "$oid": "59e605feace0910012cf81a3" }],
+    "author": {
+      "id": { "$oid": "59e602cface0910012cf819c" },
+      "username": "Potato"
+    },
+    "createdAt": { "$date": "2017-10-17T13:28:30.348Z" },
+    "__v": 3
+  },
+  {
+    "_id": { "$oid": "5aa09799d43d490012fdaa1d" },
+    "name": "Best Camp",
+    "image": "https://images.unsplash.com/photo-1486427916204-2a304eadf26d?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjF9&s=9fbc8df6be4143fa83d1e12f4442a551",
+    "description": "the best camping place ever",
+    "price": "99",
+    "location": "Paraguay",
+    "lat": -23.442503,
+    "lng": -58.443832,
+    "comments": [{ "$oid": "5aa097aed43d490012fdaa1e" }],
+    "author": {
+      "id": { "$oid": "59e60240ace0910012cf819b" },
+      "username": "Admin"
+    },
+    "createdAt": { "$date": "2018-03-08T01:53:29.883Z" },
+    "__v": 1
+  }
+]

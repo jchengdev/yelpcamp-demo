@@ -10,7 +10,7 @@ EXPOSE 8080
 ENV NODE_VERSION=14.16.0
 ENV NODE_ENV=production
 ENV DEBUG=*,-request:*
-ENV DATABASE_URL=mongodb://username:password@host/db
+ENV DATABASE_URL=mongodb://username:password@host:port/db
 ENV PORT=8080
 RUN mkdir /node && chown -R node:node /node
 USER node
@@ -21,7 +21,7 @@ RUN npm config list \
   && npm cache clean --force
 
 FROM base as dev 
-ENV NODE_ENV=docker-dev 
+ENV NODE_ENV=development
 ENV PATH=/node/node_modules/.bin:$PATH 
 WORKDIR /node 
 RUN npm install --only=development 

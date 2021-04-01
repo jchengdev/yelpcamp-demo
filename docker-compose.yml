@@ -57,10 +57,6 @@ services:
     volumes:
       - .:/node/app
       - /node/node_modules
-    environment:
-      - NODE_ENV=development
-      - DATABASE_URL=mongodb://username:password@db-docker:27017/yelpcamp_123 # 'db-docker' DNS label instead of 'localhost' (cross-container)
-      - PORT=8080
     env_file:
       - ./.env # create untracked file for remote DB connectivity DATABASE_URL=mongodb+srv://<...>
     depends_on:

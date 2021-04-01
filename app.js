@@ -9,7 +9,6 @@ var http = require('http'),
   passport = require('passport'),
   localStrategy = require('passport-local'),
   User = require('./models/user');
-//seedDB                  = require("./seeds");
 
 var campgroundRoutes = require('./routes/campgrounds'),
   commentRoutes = require('./routes/comments'),
@@ -42,7 +41,6 @@ mongoose.connection.on(
 );
 mongoose.connection.once('open', function () {
   console.log("MongoDB -> 'yelpcamp_123' database connected!");
-  //seedDB();
 });
 
 //MOMENT.JS INCLUSION

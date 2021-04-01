@@ -21,8 +21,10 @@ services:
     environment:
       MONGO_DB: db-docker
       DATABASE_NAME: yelpcamp_123
-      USERNAME: username
-      PASSWORD: password
+      ADMIN_USER: admin
+      ADMIN_PASS: admin
+      DB_USER: username
+      DB_PASS: password
     depends_on:
       db-docker:
         condition: service_healthy

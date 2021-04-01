@@ -2,9 +2,11 @@ FROM mongo:4.4.4
 
 ENV MONGO_DB=db-docker
 ENV DATABASE_NAME=yelpcamp_123
-ENV USERNAME=username
-ENV PASSWORD=password
+ENV ADMIN_USER=admin
+ENV ADMIN_PASS=admin
+ENV DB_USER=username
+ENV DB_PASS=password
 
 COPY . .
-RUN  chmod -R 777 ./mongo_import.sh
-CMD [ "/bin/sh", "-c", "./mongo_import.sh ${MONGO_DB} ${DATABASE_NAME} ${USERNAME} ${PASSWORD}" ]
+RUN  chmod -R 777 ./setup.sh
+CMD [ "/bin/sh", "-c", "./setup.sh ${MONGO_DB} ${DATABASE_NAME} ${ADMIN_USER} ${ADMIN_PASS} ${DB_USER} ${DB_PASS}" ]

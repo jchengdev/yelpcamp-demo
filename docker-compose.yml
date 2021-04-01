@@ -25,8 +25,8 @@ services:
         condition: service_healthy
 
   yelpcamp:
-    container_name: 'yelpcamp-express'
-    image: 'jchengdeveng/yelpcamp-express'
+    container_name: 'yelpcamp-ejs'
+    image: 'jchengdeveng/yelpcamp-ejs'
     build:
       context: .
       dockerfile: Dockerfile
@@ -47,3 +47,6 @@ services:
       - PORT=8080
     env_file:
       - ./.env # create untracked file with remote DB URI
+    depends_on:
+      db-docker:
+        condition: service_healthy

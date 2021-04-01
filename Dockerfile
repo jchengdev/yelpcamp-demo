@@ -32,5 +32,5 @@ FROM base as prod
 RUN mkdir /node/app && chown -R node:node /node/app
 WORKDIR /node/app
 COPY --chown=node:node . .
-RUN sed -i "s/%%COMMIT_SHA%%/$SOURCE_COMMIT/g" ./views/about.ejs
+RUN sed -i "s~%%COMMIT_SHA%%~$SOURCE_COMMIT~g" ./views/about.ejs
 CMD [ "node", "./app.js" ]
